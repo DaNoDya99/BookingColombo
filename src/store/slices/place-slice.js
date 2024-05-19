@@ -145,16 +145,13 @@ export const deletePlace = createAsyncThunk(
 export const updatePlace = createAsyncThunk(
     'place/updatePlace',
     async (formData) => {
-        return api.put('/admin/update-place', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(response => {
+        return api.put('/admin/update-place', formData).then(response => {
             return {
                 statusFlag: 'success',
                 message: response.data.message
             }
         }).catch(error => {
+            console.log(error.response)
             return {
                 statusFlag: 'error',
                 message: error.response.data.message

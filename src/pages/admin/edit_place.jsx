@@ -8,7 +8,6 @@ import { deletePlace, getPlace, updatePlace } from "../../store/slices/place-sli
 function EditPlace(){
     const id = useLoaderData();
     const dispatch = useDispatch();
-    console.log(id);
 
     const [formData, setFormData] = React.useState({
         category: '',
@@ -17,7 +16,8 @@ function EditPlace(){
         closing_time: '',
         description: '',
         location: '',
-        images: []
+        images: [],
+        placeCode: id
     });
 
     const allPlaces = useSelector((state) => state.place.places);
@@ -42,7 +42,8 @@ function EditPlace(){
             closing_time: '',
             description: '',
             location: '',
-            images: []
+            images: [],
+            placeCode: ''
         })
     }
 
@@ -55,7 +56,8 @@ function EditPlace(){
                 closing_time: place.closingTime,
                 description: place.description,
                 location: place.location,
-                images: place.images
+                images: place.images,
+                placeCode: place.placeCode
             });
         }
     }, [place]);
@@ -75,16 +77,20 @@ function EditPlace(){
         e.preventDefault();
         let data = new FormData();
 
+        data.append('placeCode', formData.placeCode);
         data.append('category', formData.category);
         data.append('place', formData.place);
         data.append('opening_time', formData.opening_time);
         data.append('closing_time', formData.closing_time);
         data.append('description', formData.description);
         data.append('location', formData.location);
-        for (let i = 0; i < formData.images.length; i++) {
-            data.append('images', formData.images[i]);
-        }
+        // for (let i = 0; i < formData.images.length; i++) {
+        //     data.append('images', formData.images[i]);
+        // }
         dispatch(updatePlace(data));
+        // for (const value of data.values()) {
+        //     console.log(value);
+        // }
     }
 
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
