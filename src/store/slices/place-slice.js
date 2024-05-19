@@ -38,9 +38,10 @@ const placeSlice = createSlice({
                 state.place = action.payload.place;
                 state.message.addPlace = action.payload.message;
                 state.errors.addPlace = {};
-                setTimeout(() => {
-                    // window.location.reload()
-                }, 1000);
+                // setTimeout(() => {
+                //     // window.location.reload()
+                // }, 1000);
+                window.location.href = '/traveller/property';
             } else {
                 state.errors.addPlace = action.payload.errors;
             }
@@ -146,6 +147,7 @@ export const updatePlace = createAsyncThunk(
     'place/updatePlace',
     async (formData) => {
         return api.put('/admin/update-place', formData).then(response => {
+            // console.log(response);
             return {
                 statusFlag: 'success',
                 message: response.data.message
